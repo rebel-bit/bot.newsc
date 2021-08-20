@@ -1,18 +1,18 @@
 <div align="center">
 <img src="https://i.pinimg.com/736x/d5/93/d9/d593d9b5d4908a2c89b5a8a71eefbe4c.jpg" alt="YOGI" width="170" />
 
-## YOGIPW-API
+## SELF-BOT
 
 </div>
 
 <p align="center">
-<a href="##"><img title="tod-api" src="https://img.shields.io/static/v1?label=package&message=tod-api&color=red"></a>
+<a href="##"><img title="SELF-BOT" src="https://img.shields.io/static/v1?label=package&message=SELF-BOT&color=red"></a>
 </p>
 <p align="center">
-  <a href="https://github.com/yogipw"><img title="Author" src="https://img.shields.io/badge/Author-yogipw-red.svg?style=for-the-badge&logo=github" /></a>
+  <a href="https://github.com/yogipw"><img title="Author" src="https://img.shields.io/badge/Author-yogipw-blue.svg?style=for-the-badge&logo=github" /></a>
 </p>
 <p align="center">
-<a href="#"><img title="mengapi" src="https://img.shields.io/static/v1?label=FREE&message=tod-api&color=pink"></a>
+<a href="#"><img title="mengapi" src="https://img.shields.io/static/v1?label=FREE&message=SELF-BOT&color=blue"></a>
 </p>
 
 # Requirements
@@ -52,5 +52,5 @@
 
 # Thanks To
 * [`Baileys`](https://github.com/adiwajshing/Baileys)
-* [`Dah gaada lagi`](https://github.com/yogipw)
+* [`Hexagonz`](https://github.com/hexagonz)
 
