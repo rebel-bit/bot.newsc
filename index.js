@@ -9,7 +9,7 @@ const {
   ChatModification,
   WA_MESSAGE_STUB_TYPES,
   WA_DEFAULT_EPHEMERAL,
-  ReconnectMode,
+  ReclientectMode,
   ProxyAgent,
   GroupSettingChange,
   waChatKey,
@@ -745,7 +745,7 @@ module.exports = client = async (client, mek) => {
         }
       }
     }
-    
+
     //========================================================================================================================//
     colors = ["red", "white", "black", "blue", "yellow", "green"];
     const isMedia = type === "imageMessage" || type === "videoMessage";
@@ -873,7 +873,7 @@ module.exports = client = async (client, mek) => {
         { quoted: mek }
       );
     };
-//kasih wm gw ajg kalau make
+    //kasih wm gw ajg kalau make
     if (isGroup && isAntilink && !mek.key.fromMe) {
       if (budy.includes("://chat.whatsapp.com/")) {
         if (isGroupAdmins) return reply("admin bebas");
@@ -881,11 +881,7 @@ module.exports = client = async (client, mek) => {
         client.groupRemove(from, [sender]);
       }
     }
-    if (
-      isGroup &&
-      isAntiviewonce &&
-      m.mtype == "viewOnceMessage"
-    ) {
+    if (isGroup && isAntiviewonce && m.mtype == "viewOnceMessage") {
       reply(
         `@${sender.split("@")[0]} Terdeteksi mengirim gambar/video viewonce!`
       );
@@ -936,17 +932,17 @@ module.exports = client = async (client, mek) => {
         client.groupRemove(from, [sender]);
       }
     }
-
     let settingstatus = 0;
     if (new Date() * 1 - settingstatus > 1000) {
       let _uptime = process.uptime() * 1000;
       let uptime = clockString(_uptime);
+
       await client.setStatus(`Aktif selama ${uptime}`).catch((_) => _);
       settingstatus = new Date() * 1;
     }
 
     if (!mek.key.fromMe && banChats === true) return;
-    if (prefixStatus) if (_chats.startsWith(command)) return;
+
     switch (command) {
       case "menu":
       case "help":
@@ -970,6 +966,7 @@ ${readmore}
 • ${prefix}mode [2 Button self/public]
 • ${prefix}term <code>
 • ${prefix}eval <code>
+• ${prefix}colongsw [reply sw]
     
 *GRUP*
 • ${prefix}grup [3 Button]
@@ -977,8 +974,8 @@ ${readmore}
 • ${prefix}demote <reply chat member>
 • ${prefix}setdesc
 • ${prefix}setname
-• ${prefix}kick <reply chat member>
-• ${prefix}add <reply chat member>
+• ${prefix}kick <reply/tag member>
+• ${prefix}add <reply/tag member>
 • ${prefix}getbio <reply chat member>
 • ${prefix}getname <reply chat member>
 • ${prefix}reminder <msg/2s>
@@ -1135,6 +1132,8 @@ ${readmore}
         }
         mentions(teksnyee, cemde, true);
         break;
+      //------------------< Fitur Fun >-------------------
+
       //------------------< Fitur Anti antian >-------------------
       case "antilink":
         if (!isGroup) return reply("Khusus di grup");
@@ -1251,7 +1250,7 @@ ${readmore}
           );
         }
         break;
-      
+
       case "autojoin":
         if (!isGroup) return reply("Khusus di grup");
         if (!mek.key.fromMe) return reply("Khusus owner");
@@ -1416,57 +1415,42 @@ ${members > 1 ? `${members - reads.length - deliveries.length} tersisa` : ""}
         await qse.quoted.copyNForward(m.chat, true);
         break;
       case "kick":
-        if (!isGroupAdmins) return reply("Admin Group Only");
-        if (!isBotGroupAdmins) return reply("Bot not admin!");
-        if (!isGroup) return;
+        if (!isGroup) return reply(mess.only.group);
+        if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.admin);
+        if (!isBotGroupAdmins) return reply("Bot not admin");
         if (
-          mek.message.extendedTextMessage === null ||
-          mek.message.extendedTextMessage === undefined
+          mek.message.extendedTextMessage === undefined ||
+          mek.message.extendedTextMessage === null
         )
-          return;
-        if (
-          mek.message.extendedTextMessage.contextInfo.participant === undefined
-        ) {
-          entah = mek.message.extendedTextMessage.contextInfo.mentionedJid;
-          if (entah.length > 1) {
-            var mems_ids = [];
-            for (let ids of entah) {
-              mems_ids.push(ids);
-            }
-            kick(from, mems_ids);
-          } else {
-            hexa.groupRemove(from, [entah[0]]);
-          }
+          return reply("Tag target yang ingin di kick!");
+        mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid;
+        if (mentioned.length > 1) {
+          client.groupRemove(from, mentioned);
+          reply(mess.success);
+        } else if (mentioned.length < 1) {
+          anu = mek.message.extendedTextMessage.contextInfo.participant;
+          client.groupRemove(from, [anu]);
+          reply(mess.success);
         } else {
-          entah = mek.message.extendedTextMessage.contextInfo.participant;
-          kick(from, [entah]);
+          client.groupRemove(from, mentioned);
+          reply(mess.success);
         }
         break;
       case "add":
-        if (!isGroupAdmins) return reply("Admin Group Only");
-        if (!isBotGroupAdmins) return reply("Bot not admin!");
-        if (!isGroup) return;
-        if (
-          mek.message.extendedTextMessage === null ||
-          mek.message.extendedTextMessage === undefined
-        )
-          return;
-        if (
-          mek.message.extendedTextMessage.contextInfo.participant === undefined
-        ) {
-          entah = mek.message.extendedTextMessage.contextInfo.mentionedJid;
-          if (entah.length > 1) {
-            var mems_ids = [];
-            for (let ids of entah) {
-              mems_ids.push(ids);
-            }
-            add(from, mems_ids);
-          } else {
-            add(from, [entah[0]]);
-          }
+        if (!isGroup) return reply(mess.only.group);
+        if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.admin);
+        if (!isBotGroupAdmins) return reply("Bot not admin");
+        mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid;
+        if (mentioned.length > 1) {
+          add(from, mentioned);
+          reply(mess.success);
+        } else if (mentioned.length < 1) {
+          anu = mek.message.extendedTextMessage.contextInfo.participant;
+          client.groupAdd(from, [anu]);
+          reply(mess.success);
         } else {
-          entah = mek.message.extendedTextMessage.contextInfo.participant;
-          add(from, [entah]);
+          add(from, mentioned);
+          reply(mess.success);
         }
         break;
       case "getbio":
@@ -1899,6 +1883,7 @@ Reminder berhasil diaktifkan!
           ]
         );
         break;
+
       case "youtube":
         if (!isUrl(args[0]) && !args[0].includes("youtu"))
           return reply(mess.Iv);
@@ -2132,6 +2117,34 @@ Reminder berhasil diaktifkan!
             }
           }
         });
+        break;
+      case "colongsw": //arif
+        if (!mek.key.fromMe) return;
+        if ((isMedia && !mek.message.videoMessage) || isQuotedImage) {
+          ger = isQuotedImage
+            ? JSON.parse(JSON.stringify(mek).replace("quotedM", "m")).message
+                .extendedTextMessage.contextInfo
+            : mek;
+          owgi = await client.downloadAndSaveMediaMessage(ger);
+          client.sendMessage(sender, fs.readFileSync(owgi), "imageMessage", {
+            caption: q,
+          });
+          reply("Sukses");
+          fs.unlinkSync(owgi);
+        } else if ((isMedia && !mek.message.videoMessage) || isQuotedVideo) {
+          ger = isQuotedVideo
+            ? JSON.parse(JSON.stringify(mek).replace("quotedM", "m")).message
+                .extendedTextMessage.contextInfo
+            : mek;
+          owgi = await client.downloadAndSaveMediaMessage(ger);
+          client.sendMessage(sender, fs.readFileSync(owgi), "videoMessage", {
+            caption: q,
+          });
+          reply("Sukses");
+          fs.unlinkSync(owgi);
+        } else {
+          reply("Reply sw foto / video yg mau dicolong");
+        }
         break;
       case "caripesan":
         if (!q) return reply("pesannya apa bang?");
@@ -3452,7 +3465,7 @@ ${
     }
   } catch (e) {
     e = String(e);
-    if (!e.includes("this.isZero") && !e.includes("jid")) {
+    if (!e.includes("c.isZero") && !e.includes("jid")) {
       console.log("Message : %s", color(e, "green"));
     }
     // console.log(e)

@@ -121,7 +121,7 @@ const starts = async (client = new WAConnection()) => {
           })
         ).imageMessage;
         buttonsMessage = {
-          contentText: `${stus ? tokss : teks}`,
+          contentText: `${teks}`,
           footerText: "Semoga betah ☕",
           imageMessage: imageMsg,
           buttons: buttons,
@@ -173,8 +173,9 @@ const starts = async (client = new WAConnection()) => {
       }
       if (anu.action == "promote") {
         const mdata = await client.groupMetadata(anu.jid);
-        anu_user = client.contacts[mem];
         num = anu.participants[0];
+        let w = client.contacts[num] || { notify: num.replace(/@.+/, "") };
+        anu_user = w.vname || w.notify || num.split("@")[0];
         try {
           ppimg = await client.getProfilePicture(
             `${anu.participants[0].split("@")[0]}@c.us`
@@ -183,15 +184,20 @@ const starts = async (client = new WAConnection()) => {
           ppimg =
             "https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg";
         }
-        let buff = await getBuffer(ppimg);
-        teks = `@${num.split("@")[0]} Telah dipromote`;
-        client.sendMessage(mdata.id, teks, MessageType.text);
+        let buffer = await getBuffer(
+          `https://api-yogipw.herokuapp.com/api/promote?name=${anu_user}&msg=selamat%20menjadi%20admin&mem=${groupAdmins.length}&picurl=${ppimg}&bgurl=https://cdn.discordapp.com/attachments/819995259261288475/835055559941292032/style.jpg`
+        );
+        teks = `${anu_user} Telah dipromote`;
+        client.sendMessage(mdata.id, buffer, MessageType.image, {
+          caption: teks,
+        });
       }
 
       if (anu.action == "demote") {
-        anu_user = client.contacts[mem];
-        num = anu.participants[0];
         const mdata = await client.groupMetadata(anu.jid);
+        num = anu.participants[0];
+        let w = client.contacts[num] || { notify: num.replace(/@.+/, "") };
+        anu_user = w.vname || w.notify || num.split("@")[0];
         try {
           ppimg = await client.getProfilePicture(
             `${anu.participants[0].split("@")[0]}@c.us`
@@ -201,51 +207,52 @@ const starts = async (client = new WAConnection()) => {
             "https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg";
         }
 
-        let buff = await getBuffer(
-          `https://gatauajg.yogipw.repl.co/api/demote?name=${anu_user.notify}&msg=selamat%20menjadi%20admin&mem=${groupAdmins.length}&picurl=${ppimg}&bgurl=https://cdn.discordapp.com/attachments/819995259261288475/835055559941292032/style.jpg`
+        let buffer = await getBuffer(
+          `https://api-yogipw.herokuapp.com/api/demote?name=${anu_user}&msg=yahahaha didemote&mem=${groupAdmins.length}&picurl=${ppimg}&bgurl=https://cdn.discordapp.com/attachments/819995259261288475/835055559941292032/style.jpg`
         );
-        teks = `@${num.split("@")[0]} Telah didemote`;
-        client.sendMessage(mdata.id, teks, MessageType.text);
+        teks = `${anu_user} Telah didemote`;
+        client.sendMessage(mdata.id, buffer, MessageType.image, {
+          caption: teks,
+        });
       }
     } catch (e) {
       console.log("Error : %s", color(e, "red"));
     }
   });
-//
-client.on("message-delete", async (m) => {
-  if (m.key.remoteJid == "status@broadcast") return;
-  if (!m.key.fromMe && m.key.fromMe) return;
-  m.message =
-    Object.keys(m.message)[0] === "ephemeralMessage"
-      ? m.message.ephemeralMessage.message
-      : m.message;
-  const jam = moment.tz("Asia/Jakarta").format("HH:mm:ss");
-  let d = new Date();
-  let locale = "id";
-  let gmt = new Date(0).getTime() - new Date("1 Januari 2021").getTime();
-  let weton = ["Pahing", "Pon", "Wage", "Kliwon", "Legi"][
-    Math.floor((d * 1 + gmt) / 84600000) % 5
-  ];
-  let week = d.toLocaleDateString(locale, { weekday: "long" });
-  let calender = d.toLocaleDateString(locale, {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-  const type = Object.keys(m.message)[0];
-  client.sendMessage(
-    m.key.remoteJid,
-    `\`\`\`「 Anti Delete 」\`\`\`
+  //
+  client.on("message-delete", async (m) => {
+    if (m.key.remoteJid == "status@broadcast") return;
+    if (!m.key.fromMe && m.key.fromMe) return;
+    m.message =
+      Object.keys(m.message)[0] === "ephemeralMessage"
+        ? m.message.ephemeralMessage.message
+        : m.message;
+    const jam = moment.tz("Asia/Jakarta").format("HH:mm:ss");
+    let d = new Date();
+    let locale = "id";
+    let gmt = new Date(0).getTime() - new Date("1 Januari 2021").getTime();
+    let weton = ["Pahing", "Pon", "Wage", "Kliwon", "Legi"][
+      Math.floor((d * 1 + gmt) / 84600000) % 5
+    ];
+    let week = d.toLocaleDateString(locale, { weekday: "long" });
+    let calender = d.toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    const type = Object.keys(m.message)[0];
+    client.sendMessage(
+      m.key.remoteJid,
+      `\`\`\`「 Anti Delete 」\`\`\`
   •> Nama : @${m.participant.split("@")[0]}
   •> Waktu : ${jam} ${week} ${calender}
   •> Type : ${type}`,
-    MessageType.text,
-    { quoted: m.message, contextInfo: { mentionedJid: [m.participant] } }
-  );
-  
-  client.copyNForward(m.key.remoteJid, m.message);
-  
-});
+      MessageType.text,
+      { quoted: m.message, contextInfo: { mentionedJid: [m.participant] } }
+    );
+
+    client.copyNForward(m.key.remoteJid, m.message);
+  });
   client.on("chat-update", async (message) => {
     require("./index.js")(client, message);
   });
