@@ -1,121 +1,56 @@
 <div align="center">
-<img src="https://i.ibb.co/qCHNd0j/36fa310d84b9844bbea4eaf9d6462eed5d6127c6.jpg" alt="SELF-HX" width="300" />
+<img src="https://i.pinimg.com/736x/d5/93/d9/d593d9b5d4908a2c89b5a8a71eefbe4c.jpg" alt="YOGI" width="170" />
 
-# DAHLAH
+## YOGIPW-API
 
->
->
->
 </div>
+
 <p align="center">
-  <a href="https://github.com/Hexagonz"><img title="Author" src="https://img.shields.io/badge/Author-Hexagonz-red.svg?style=for-the-badge&logo=github" /></a>
-  <h4 align="center">
-  <a href="https://wa.me/6285751056816">KYAAA ONI CHAN >//< </a>
-</h4>
+<a href="##"><img title="tod-api" src="https://img.shields.io/static/v1?label=package&message=tod-api&color=red"></a>
+</p>
+<p align="center">
+  <a href="https://github.com/yogipw"><img title="Author" src="https://img.shields.io/badge/Author-yogipw-red.svg?style=for-the-badge&logo=github" /></a>
+</p>
+<p align="center">
+<a href="#"><img title="mengapi" src="https://img.shields.io/static/v1?label=FREE&message=tod-api&color=pink"></a>
 </p>
 
-## CARA INSTALL DI TERMUX
-```bash
-> pkg install nodejs && pkg install git
-> git clone https://github.com/Hexagonz/SELF-HX
-> cd SELF-HX
-> bash install.sh
-> npm start/node main.js
-```
-## CARA INSTALL DI LAPTOP
-```bash
-> git clone https://github.com/Hexagonz/SELF-HX 
-> cd SELF-HX
-> npm i
-> npm start/node main.js
-```
-
-# INSTALL
+# Requirements
 * [Node.js](https://nodejs.org/en/)
 * [Git](https://git-scm.com/downloads)
 * [FFmpeg](https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2020-12-08-13-03/ffmpeg-n4.3.1-26-gca55240b8c-win64-gpl-4.3.zip)
 * [Libwebp](https://developers.google.com/speed/webp/download)
+* Any text editor
 
-# PIMTUR
-
-| OWNER |✅|
-| ------------- | ------------- |
-| OFF |✅|
-| ON |✅|
-| STATUS |✅|
-
-| MAKER |✅|
-| ------------- | ------------- |
-| STICKER |✅|
-| STICKER GIF |✅|
-| STICKER WM |✅|
-| TAKE STICKER |✅|
-| FDEFACE |✅|
-
-| CONVERT |✅|
-| ------------- | ------------- |
-| TOIMG |✅|
-| TOMP3 |✅|
-| TOMP4 |✅|
-| SLOW |✅|
-| FAST |✅|
-| REVERSE |✅|
-| TOURL |✅|
-
-| UP STORY |✅|
-| ------------- | ------------- |
-| UPSWTEXT |✅|
-| UPSWIMAGE |✅|
-| UPSWVIDEO  |✅|
-
-| FUN |✅|
-| ------------- | ------------- |
-| FITNAH |✅|
-| FITNAH PC |✅|
-| KONTAK |✅|
+# Instalasi
+## Clone Repo & Instalasi dependencies
+```bash
+> git clone https://github.com/yogipw/Self-Bot
+> cd Self-Bott
+> npm install
+> node .
+```
+## For Termux
+```bash
+> termux-setup-storage
+> apt update && apt upgrade
+> pkg install nodejs
+> pkg install git
+> pkg install bash
+> git clone https://github.com/yogipw/Self-Bot
+> cd Self-Bot
+> bash install.sh
+> npm install
+> node .
+```
 
 
-| TAG |✅|
-| ------------- | ------------- |
-| STICKTAG |✅|
-| HIDETAG |✅|
-| KONTAG |✅|
-| TOTAG |✅|
+## Connect With Me
+<p align="center">
+ <a href="https://instagram.com/yogipw"><img alt="Instagram" src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=black"/></a><a href="https://wa.me/+62853535697153"><img alt="WhatsApp" src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=black"/></a>
+</p>
 
-| DOWNLOAD |✅|
-| ------------- | ------------- |
-| YTSEARCH |✅|
-| IGSTALK |✅|
-| PLAY |✅|
-| VIDEO |✅|
-| YTMP3 |✅|
-| YTMP4 |✅|
-| IGDL |✅|
-| FBDL |✅|
-| TIKTOKDL |✅|
-| TIKTOK AUDIO |✅|
-| TWITTER |✅|
-| BRAINLY |✅|
-| IMAGE |✅|
-| ANIME |✅|
-
-| OTHER |✅|
-| ------------- | ------------- |
-| SELF |✅|
-| PUBLIC |✅|
-| SET THUMB |✅|
-| SET FAKE IMG |✅|
-| SET TARGET |✅|
-| SET REPLY |✅|
-| PING |✅|
-| JOIN |✅|
-| GET |✅|
-| TERM |✅|
-| X |✅|
-
-  # MAKASIH LORT
+# Thanks To
 * [`Baileys`](https://github.com/adiwajshing/Baileys)
-* [`MhankBarBar`](https://github.com/MhankBarBar)
-* [`MRHRTZ`](https://github.com/MRHRTZ)
-  
-  
+* [`Dah gaada lagi`](https://github.com/yogipw)
+
