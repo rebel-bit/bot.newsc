@@ -10,7 +10,6 @@ const WAConnection = simple.WAConnection(_WAConnection);
 const fs = require("fs");
 const { banner, start, success, getGroupAdmins } = require("./lib/functions");
 const { color } = require("./lib/color");
-const { keepalive } = require("./keepalive");
 const fetch = require("node-fetch");
 const moment = require("moment-timezone");
 
