@@ -6,7 +6,7 @@
 </div>
 
 <p align="center">
-<a href="##"><img title="SELF-BOT" src="https://img.shields.io/static/v1?label=package&message=SELF-BOT&color=red"></a>
+<a href="##"><img title="SELF-BOT" src="https://img.shields.io/static/v1?label=package&message=SELF-BOT&color=blue"></a>
 </p>
 <p align="center">
   <a href="https://github.com/yogipw"><img title="Author" src="https://img.shields.io/badge/Author-yogipw-blue.svg?style=for-the-badge&logo=github" /></a>
