@@ -1052,6 +1052,14 @@ ${readmore}
 • ${prefix}playstore <query>
 • ${prefix}otaku <query>
     
+*RANDOM IMAGE*
+• ${prefix}loli
+• ${prefix}husbu
+• ${prefix}wafiu
+• ${prefix}wallpaperanime
+• ${prefix}naruto
+• ${prefix}aeshtetic
+
 *JADI BOT*
 • ${prefix}jadibot
 • ${prefix}stopjadibot
@@ -1074,6 +1082,8 @@ ${readmore}
 • Hit Today : ${hit_today.length} Hit
 • Total Hit : ${totalhit} Hit
 • Total Chat : ${totalchat.length} Chat
+
+Source code : github.com/yogipw/self-bot
 `;
         sendButImage(from, menu, "Jangan lupa follow ig @yogiprwaa", thumb, [
           {
@@ -2145,6 +2155,52 @@ Reminder berhasil diaktifkan!
         } else {
           reply("Reply sw foto / video yg mau dicolong");
         }
+        break;
+
+      //RANDOM IMAGE
+      case "waifu":
+      case "loli":
+      case "husbu":
+      case "milf":
+      case "cosplay":
+      case "naruto":
+      case "wibu":
+      case "aeshtetic":
+      case "wallpaperanime":
+        let wipu = await fetchJson(
+          `https://api.dhnjing.xyz/search/pinterest/image?query=${command}`
+        );
+        gmbr = wipu.result[Math.floor(Math.random() * wipu.result.length)];
+        fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(gmbr.orig.url));
+        buttons = [
+          {
+            buttonId: `${prefix + command}`,
+            buttonText: { displayText: `➡️Next` },
+            type: 1,
+          },
+        ];
+        imageMsg = (
+          await client.prepareMessage(
+            from,
+            fs.readFileSync(`./${sender}.jpeg`),
+            "imageMessage",
+            { thumbnail: Buffer.alloc(0) }
+          )
+        ).message.imageMessage;
+        buttonsMessage = {
+          footerText: "Jangan Lupa Donasi Ya Kak ☕",
+          imageMessage: imageMsg,
+          contentText: `klik Next untuk ke gambar selanjut nya`,
+          buttons,
+          headerType: 4,
+        };
+        prep = await client.prepareMessageFromContent(
+          from,
+          { buttonsMessage },
+          { quoted: mek }
+        );
+        client.relayWAMessage(prep);
+        fs.unlinkSync(`./${sender}.jpeg`);
         break;
       case "caripesan":
         if (!q) return reply("pesannya apa bang?");
