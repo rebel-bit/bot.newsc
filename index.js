@@ -941,9 +941,59 @@ module.exports = client = async (client, mek) => {
       await client.setStatus(`Aktif selama ${uptime}`).catch((_) => _);
       settingstatus = new Date() * 1;
     }
+    if (_chats.startsWith(">")) {
+      try {
+        return client.sendMessage(
+          from,
+          JSON.stringify(eval(budy.slice(2)), null, "\t"),
+          text,
+          { quoted: mek }
+        );
+      } catch (err) {
+        e = String(err);
+        reply(e);
+      }
+    }
+    if (budy.startsWith('$')){
+      const cod = args.join(' ')
+      exec(cod, (err, stdout) => {
+      if(err) return reply(`${err}`)
+      if (stdout) {
+      reply(`${stdout}`)
+      }
+      })
+    }
+    if (budy.startsWith('>')){
+      if (!mek.key.fromMe) return
+      try {
+      return client.sendMessage(from, JSON.stringify(eval(budy.slice(2)),null,'\t'),text, {quoted: mek})
+      } catch(err) {
+      e = String(err)
+      reply(e)
+      }
+      }
+      if (budy.startsWith('=>')){
+      if (!mek.key.fromMe) return
+      var konsol = budy.slice(3)
+      var util = require("util")
+      Return = (sul) => {
+      var sat = JSON.stringify(sul, null, 2)
+      bang = util.format(sat)
+      if (sat == undefined){
+      bang = util.format(sul)
+      }
+      return reply(bang)
+      }
+      try {
+      reply(util.format(eval(`;(async () => { ${konsol} })()`)))
+      console.log('\x1b[1;37m>', '[', '\x1b[1;32mEVAL\x1b[1;37m', ']', time, color(">", "green"), 'from', color(sender.split('@')[0]), 'args :', color(args.length))
+      } catch(e){
+      reply(String(e))
+      }
+      }
 
     if (!mek.key.fromMe && banChats === true) return;
-
+    if (prefixStatus) if (_chats.startsWith(command)) return;
     switch (command) {
       case "menu":
       case "help":
@@ -968,6 +1018,9 @@ ${readmore}
 • ${prefix}term <code>
 • ${prefix}eval <code>
 • ${prefix}colongsw [reply sw]
+ $
+ >
+ =>
     
 *GRUP*
 • ${prefix}grup [3 Button]
@@ -2144,7 +2197,7 @@ Reminder berhasil diaktifkan!
                 .extendedTextMessage.contextInfo
             : mek;
           owgi = await client.downloadAndSaveMediaMessage(ger);
-          client.sendMessage(sender, fs.readFileSync(owgi), "imageMessage", {
+          client.sendMessage(from, fs.readFileSync(owgi), "imageMessage", {
             caption: q,
           });
           reply("Sukses");
@@ -2155,7 +2208,7 @@ Reminder berhasil diaktifkan!
                 .extendedTextMessage.contextInfo
             : mek;
           owgi = await client.downloadAndSaveMediaMessage(ger);
-          client.sendMessage(sender, fs.readFileSync(owgi), "videoMessage", {
+          client.sendMessage(from, fs.readFileSync(owgi), "videoMessage", {
             caption: q,
           });
           reply("Sukses");
@@ -3680,20 +3733,7 @@ ${
         );
         break;
       default:
-        if (_chats.startsWith(">")) {
-          try {
-            return client.sendMessage(
-              from,
-              JSON.stringify(eval(budy.slice(2)), null, "\t"),
-              text,
-              { quoted: mek }
-            );
-          } catch (err) {
-            e = String(err);
-            reply(e);
-          }
         }
-    }
 
     if (isGroup && budy != undefined) {
     } else {
