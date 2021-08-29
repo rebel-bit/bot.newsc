@@ -52,5 +52,6 @@
 
 # Thanks To
 * [`Baileys`](https://github.com/adiwajshing/Baileys)
+* [`Dehanjing`](https://api.dehanjing.xyz/all)
 * [`Hexagonz`](https://github.com/hexagonz)
 
