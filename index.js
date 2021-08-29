@@ -42,6 +42,7 @@ const brainly = require("brainly-scraper");
 const yts = require("yt-search");
 const ms = require("parse-ms");
 const toMs = require("ms");
+const imgbb = require("imgbb-uploader");
 const { error } = require("qrcode-terminal");
 const {
   getBuffer,
@@ -993,6 +994,13 @@ ${readmore}
 • ${prefix}take <author|packname>
 • ${prefix}fdeface
 • ${prefix}emoji
+• ${prefix}wasted
+• ${prefix}wanted
+• ${prefix}deltrash
+• ${prefix}squidrip
+• ${prefix}sertiff1 <text>
+• ${prefix}bpink <text>
+• ${prefix}tulis
     
 *CONVERT*
 • ${prefix}toimg
@@ -2156,7 +2164,183 @@ Reminder berhasil diaktifkan!
           reply("Reply sw foto / video yg mau dicolong");
         }
         break;
+      case "tulis":
+        if (args.length < 1)
+          return reply(
+            `Usage: ${prefix + command} nama&kelas&nomo&kata\n*Example*: ${
+              prefix + command
+            } udin&20&17&blablabla`
+          );
+        var bodi = args.join(" ");
+        var nama = bodi.split("&")[0];
+        var kelas = bodi.split("&")[1];
+        var no = bodi.split("&")[2];
+        var aksarane = bodi.split("&")[3];
+        reply("membuat bos...");
+        rakz = await getBuffer(
+          `https://fdz-app.herokuapp.com/api/tulis?nama=${nama}&no=${no}&kelas=${kelas}&text=${aksarane}`
+        );
+        client.sendMessage(from, rakz, image, {
+          quoted: mek,
+          thumbnail: Buffer.alloc(0),
+        });
+        break;
 
+      case "card-game":
+        if ((isMedia && !mek.message.videoMessage) || isQuotedImage) {
+          ted = isQuotedImage
+            ? JSON.parse(JSON.stringify(mek).replace("quotedM", "m")).message
+                .extendedTextMessage.contextInfo
+            : mek;
+          //  console.log(ted)
+          var bodi = args.join(" ");
+          var nama = bodi.split("|")[0];
+          var kelas = bodi.split("|")[1];
+          reply("Loading.....");
+          owgi = await client.downloadAndSaveMediaMessage(ted);
+          console.log(owgi);
+          anu = await imgbb("apikey imgbb lu", owgi);
+          console.log(anu);
+          //reply (anu)
+
+          hehe = await getBuffer(
+            `https://fdz-app.herokuapp.com/api/maker/card-game?nama=${nama}&desc=${kelas}&picurl=${anu.display_url}`
+          );
+          client.sendMessage(from, hehe, image, {
+            quoted: mek,
+            thumbnail: Buffer.alloc(0),
+          });
+        } else {
+          reply(
+            `Kirim gambar atau tag gambar yang sudah dikirim lalu  dengan caption ${prefix}card-game nama|teks keterangan `
+          );
+        }
+        break;
+
+      case "sertiff1":
+        pll = body.slice(10);
+        if (args.length < 1) return reply(prefix);
+        reply("Loading.....");
+        rakz = await getBuffer(
+          `https://fdz-app.herokuapp.com/api/maker/sertif-ff-v1?text=${pll}`
+        );
+        client.sendMessage(from, rakz, image, {
+          quoted: mek,
+          thumbnail: Buffer.alloc(0),
+        });
+        break;
+      case "bpink":
+        pll = body.slice(7);
+
+        if (args.length < 1) return reply(preffk);
+        reply("Loading.....");
+        rakz = await getBuffer(
+          `https://fdz-app.herokuapp.com/api/maker/blackpink?text=${pll}`
+        );
+        client.sendMessage(from, rakz, image, {
+          quoted: mek,
+          thumbnail: Buffer.alloc(0),
+        });
+        break;
+
+      case "wanted":
+        if (
+          ((isMedia && !mek.message.videoMessage) || isQuotedImage) &&
+          args.length == 0
+        ) {
+          ted = isQuotedImage
+            ? JSON.parse(JSON.stringify(mek).replace("quotedM", "m")).message
+                .extendedTextMessage.contextInfo
+            : mek;
+          reply("Loading.....");
+          owgi = await client.downloadAndSaveMediaMessage(ted);
+          //	  console.log(owgi)
+          anu = await imgbb("3395a377ebac7e9f744c3683b44a2a59", owgi);
+          console.log(anu);
+          hehe = await getBuffer(
+            `https://fdz-app.herokuapp.com/api/maker/wanted?picurl=${anu.display_url}`
+          );
+          client.sendMessage(from, hehe, image, {
+            quoted: mek,
+            thumbnail: Buffer.alloc(0),
+          });
+        }
+        break;
+
+      case "deltrash":
+        if (
+          ((isMedia && !mek.message.videoMessage) || isQuotedImage) &&
+          args.length == 0
+        ) {
+          ted = isQuotedImage
+            ? JSON.parse(JSON.stringify(mek).replace("quotedM", "m")).message
+                .extendedTextMessage.contextInfo
+            : mek;
+          reply("Loading.....");
+          owgi = await client.downloadAndSaveMediaMessage(ted);
+          //	  console.log(owgi)
+          anu = await imgbb("3395a377ebac7e9f744c3683b44a2a59", owgi);
+          console.log(anu);
+          hehe = await getBuffer(
+            `https://fdz-app.herokuapp.com/api/maker/deltrash?imgurl=${anu.display_url}`
+          );
+          client.sendMessage(from, hehe, image, {
+            quoted: mek,
+            thumbnail: Buffer.alloc(0),
+          });
+        }
+        break;
+
+      case "squidrip":
+        if (
+          ((isMedia && !mek.message.videoMessage) || isQuotedImage) &&
+          args.length == 0
+        ) {
+          ted = isQuotedImage
+            ? JSON.parse(JSON.stringify(mek).replace("quotedM", "m")).message
+                .extendedTextMessage.contextInfo
+            : mek;
+          reply("Loading.....");
+          owgi = await client.downloadAndSaveMediaMessage(ted);
+          console.log(owgi);
+          anu = await imgbb("3395a377ebac7e9f744c3683b44a2a59", owgi);
+          console.log(anu);
+          hehe = await getBuffer(
+            `https://fdz-app.herokuapp.com/api/maker/rip?picurl=${anu.display_url}`
+          );
+          client.sendMessage(from, hehe, image, {
+            quoted: mek,
+            thumbnail: Buffer.alloc(0),
+          });
+        }
+        break;
+
+      case "wasted":
+        if (
+          ((isMedia && !mek.message.videoMessage) || isQuotedImage) &&
+          args.length == 0
+        ) {
+          ted = isQuotedImage
+            ? JSON.parse(JSON.stringify(mek).replace("quotedM", "m")).message
+                .extendedTextMessage.contextInfo
+            : mek;
+          //  console.log(ted)
+          reply("Loading.....");
+          owgi = await client.downloadAndSaveMediaMessage(ted);
+          console.log(owgi);
+          anu = await imgbb("3395a377ebac7e9f744c3683b44a2a59", owgi);
+          console.log(anu);
+          hehe = await getBuffer(
+            `https://fdz-app.herokuapp.com/api/maker/wasted?imgurl=${anu.display_url}`
+          );
+          client.sendMessage(from, hehe, image, {
+            quoted: mek,
+            thumbnail: Buffer.alloc(0),
+          });
+        } /*else {
+                                                                 reply('Jangan tambah kan apapun pada command')
+                                                                   }*/
+        break;
       //RANDOM IMAGE
       case "waifu":
       case "loli":
