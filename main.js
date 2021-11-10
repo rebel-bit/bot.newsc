@@ -20,30 +20,33 @@ nocache("./index.js", (module) => console.log(`${module} is now updated!`));
 
 const starts = async (client = new WAConnection()) => {
   client.logger.level = "warn";
-  client.version = [2, 2123, 8];
-  client.browserDescription = ["hehe boy", "Chrome", "3.0"];
+  client.version = [2,2143,3];
+  client.browserDescription = ["herman gans", "Chrome", "3.0"];
   console.log(banner.string);
   client.on("qr", () => {
     console.log(
       color("[", "white"),
       color("!", "blue"),
       color("]", "white"),
-      color(" Scan bang")
+      color("Scan Bang, 20 detik gk di scan angus qr nya")
     );
   });
 
   fs.existsSync("./session.json") && client.loadAuthInfo("./session.json");
   client.on("connecting", () => {
-    start("2", "Connecting...");
+    start("2", "Menyambung.....");
   });
   client.on("open", () => {
-    success("2", "Connected");
+    success("2", "Tersambung√, Hai owner herman👋");
   });
   await client.connect({ timeoutMs: 30 * 1000 });
   fs.writeFileSync(
     "./session.json",
     JSON.stringify(client.base64EncodedAuthInfo(), null, "\t")
   );
+        ownerNumber = ["6283146208804@s.whatsapp.net",`6283146208804@s.whatsapp.net`]
+        dtod = "6283146208804@s.whatsapp.net"
+       otod = `6283146208804@s.whatsapp.net`
 
   client.on("group-update", async (anu) => {
     metdata = await client.groupMetadata(anu.jid);
@@ -74,151 +77,50 @@ const starts = async (client = new WAConnection()) => {
       console.log(`- [ Group Setting Change ] - In ${metdata.subject}`);
     }
   });
-  client.on("group-participants-update", async (anu) => {
-    try {
-      groupMet = await client.groupMetadata(anu.jid);
-      groupMembers = groupMet.participants;
-      groupAdmins = getGroupAdmins(groupMembers);
-      mem = anu.participants[0];
+  client.on('group-participants-update', async (anu) => {
+		try {
+			const mdata = await client.groupMetadata(anu.jid)
+			console.log(anu)
+			if (anu.action == 'add') {
+				num = anu.participants[0]
+				try {
+					ppimg = await client.getProfilePicture(`${anu.participants[0].split('@')[0]}@c.us`)
+				} catch {
+					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+				}
+				teks = `❛ ━━━━━━━･❪ ❁ ❫ ･━━━━━━━ ❜\n𝐻𝑎𝑙𝑜 𝐾𝑎𝑘 *@${num.split('@')[0]}* ! 𝑆𝑒𝑙𝑎𝑚𝑎𝑡 𝐷𝑎𝑡𝑎𝑛𝑔 𝐷𝑖 𝐺𝑟𝑢𝑝 ${mdata.subject}\nIntro Dulu Ya😉\nツ Nama:\nツ Umur:\nツ Askot\n\n𝑆𝑒𝑚𝑜𝑔𝑎 𝐵𝑒𝑡𝑎ℎ 𝐷𝑎𝑛 𝐽𝑎𝑛𝑔𝑎𝑛 𝐿𝑢𝑝𝑎 𝐵𝑎𝑐𝑎 𝐷𝑒𝑠𝑘𝑟𝑖𝑝𝑠𝑖 𝐺𝑟𝑢𝑝 𝑌𝑎`
+				let buff = await getBuffer(ppimg)
+				client.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
+				} else if (anu.action == 'remove') {
+				num = anu.participants[0]
+				try {
+					ppimg = await client.getProfilePicture(`${num.split('@')[0]}@c.us`)
+				} catch {
+					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+				}
+				teks = `𝑦𝑎ℎ 𝑑𝑖𝑎 𝑘𝑒𝑙𝑢𝑎𝑟\n\n𝑆𝑒𝑙𝑎𝑚𝑎𝑡 𝑇𝑖𝑛𝑔𝑔𝑎𝑙 𝐾𝑎 @${num.split('@')[0]}`
+				let buff = await getBuffer(ppimg)
+				client.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
+			}
+			else if (anu.action == 'promote') {
+fkontakk = { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(anu.jid ? { remoteJid: '6283136505591-1604595598@g.us' } : {})}, message: { "contactMessage":{"displayName": `${mdata.subject}`,"vcard":`BEGIN:VCARD\nVERSION:3.0\nN:2;pemuda;;;\nFN:pemuda\nitem1.TEL;waid=6281319944917:6281319944917\nitem1.X-ABLabel:Mobile\nEND:VCARD` }}}
 
-      console.log(anu);
-      try {
-        pp_user = await client.getProfilePicture(mem);
-      } catch (e) {
-        pp_user =
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60";
-      }
-      try {
-        pp_grup = await client.getProfilePicture(anu.jid);
-      } catch (e) {
-        pp_grup =
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60";
-      }
-      if (anu.action == "add" && mem.includes(client.user.jid)) {
-        client.sendMessage(anu.jid, "Halo!", "conversation");
-      }
-      if (anu.action == "add" && !mem.includes(client.user.jid)) {
-        mdata = await client.groupMetadata(anu.jid);
-        memeg = mdata.participants.length;
-        num = anu.participants[0];
-        let v = client.contacts[num] || { notify: num.replace(/@.+/, "") };
-        anu_user = v.vname || v.notify || num.split("@")[0];
-        time_wel = moment.tz("Asia/Jakarta").format("HH:mm");
-        teks = `Halo ${anu_user} \n\nNama : \nUmur :\nGender : \nAsal :\n\nSemoga Betah dan jangan lupa isi\nAnd Following Rules Group`;
-        buff = await getBuffer(
-          `http://hadi-api.herokuapp.com/api/card/welcome?nama=${anu_user}&descriminator=${
-            groupMembers.length
-          }&memcount=${memeg}&gcname=${encodeURI(
-            mdata.subject
-          )}&pp=${pp_user}&bg=https://i.postimg.cc/rFkw8MpX/IMG-20210807-151325.jpg`
-        );
-        buttons = [
-          { buttonId: `y`, buttonText: { displayText: "Welcome👋" }, type: 1 },
-        ];
-        imageMsg = (
-          await client.prepareMessageMedia(buff, "imageMessage", {
-            thumbnail: buff,
-          })
-        ).imageMessage;
-        buttonsMessage = {
-          contentText: `${teks}`,
-          footerText: "Semoga betah ☕",
-          imageMessage: imageMsg,
-          buttons: buttons,
-          headerType: 4,
-        };
-        prep = await client.prepareMessageFromContent(
-          mdata.id,
-          { buttonsMessage },
-          {}
-        );
-        client.relayWAMessage(prep);
-      }
-      if (anu.action == "remove" && !mem.includes(client.user.jid)) {
-        mdata = await client.groupMetadata(anu.jid);
-        num = anu.participants[0];
-        let w = client.contacts[num] || { notify: num.replace(/@.+/, "") };
-        anu_user = w.vname || w.notify || num.split("@")[0];
-        time_wel = moment.tz("Asia/Jakarta").format("HH:mm");
-        memeg = mdata.participants.length;
-        out = `Kenapa tuh? kok bisa keluar? \nSayonara ${anu_user} we will miss you`;
-        buff = await getBuffer(
-          `http://hadi-api.herokuapp.com/api/card/goodbye?nama=${anu_user}&descriminator=${
-            groupMembers.length
-          }&memcount=${memeg}&gcname=${encodeURI(
-            mdata.subject
-          )}&pp=${pp_user}&bg=https://i.postimg.cc/rFkw8MpX/IMG-20210807-151325.jpg`
-        );
-        buttons = [
-          { buttonId: `y`, buttonText: { displayText: "Sayonara👋" }, type: 1 },
-        ];
-        imageMsg = (
-          await client.prepareMessageMedia(buff, "imageMessage", {
-            thumbnail: buff,
-          })
-        ).imageMessage;
-        buttonsMessage = {
-          contentText: `${out}`,
-          footerText: "Nitip gorengan ya",
-          imageMessage: imageMsg,
-          buttons: buttons,
-          headerType: 4,
-        };
-        prep = await client.prepareMessageFromContent(
-          mdata.id,
-          { buttonsMessage },
-          {}
-        );
-        client.relayWAMessage(prep);
-      }
-      if (anu.action == "promote") {
-        const mdata = await client.groupMetadata(anu.jid);
-        num = anu.participants[0];
-        let w = client.contacts[num] || { notify: num.replace(/@.+/, "") };
-        anu_user = w.vname || w.notify || num.split("@")[0];
-        try {
-          ppimg = await client.getProfilePicture(
-            `${anu.participants[0].split("@")[0]}@c.us`
-          );
-        } catch {
-          ppimg =
-            "https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg";
-        }
-        let buffer = await getBuffer(
-          `https://api-yogipw.herokuapp.com/api/promote?name=${anu_user}&msg=selamat%20menjadi%20admin&mem=${groupAdmins.length}&picurl=${ppimg}&bgurl=https://cdn.discordapp.com/attachments/819995259261288475/835055559941292032/style.jpg`
-        );
-        teks = `${anu_user} Telah dipromote`;
-        client.sendMessage(mdata.id, buffer, MessageType.image, {
-          caption: teks,
-        });
-      }
-
-      if (anu.action == "demote") {
-        const mdata = await client.groupMetadata(anu.jid);
-        num = anu.participants[0];
-        let w = client.contacts[num] || { notify: num.replace(/@.+/, "") };
-        anu_user = w.vname || w.notify || num.split("@")[0];
-        try {
-          ppimg = await client.getProfilePicture(
-            `${anu.participants[0].split("@")[0]}@c.us`
-          );
-        } catch {
-          ppimg =
-            "https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg";
-        }
-
-        let buffer = await getBuffer(
-          `https://api-yogipw.herokuapp.com/api/demote?name=${anu_user}&msg=yahahaha didemote&mem=${groupAdmins.length}&picurl=${ppimg}&bgurl=https://cdn.discordapp.com/attachments/819995259261288475/835055559941292032/style.jpg`
-        );
-        teks = `${anu_user} Telah didemote`;
-        client.sendMessage(mdata.id, buffer, MessageType.image, {
-          caption: teks,
-        });
-      }
-    } catch (e) {
-      console.log("Error : %s", color(e, "red"));
-    }
-  });
+num = anu.participants[0]
+teks = `*P R O M O T E - D E T E C T E D*\nUsername: @${num.split('@')[0]}\nTime : ${moment.tz('Asia/Jakarta').format('DD/MM HH:mm:ss')}\nGroup: ${mdata.subject}\n\nSelamat Yah atas Kenaikan Pangkatnya 🔥`
+client.sendMessage(mdata.id, teks, MessageType.text, {contextInfo: {"mentionedJid": [num]}, quoted: fkontakk})
+console.log(color('|TRM|'), color(`Promote Member ${num.split('@')[0]} In ${mdata.subject}`,  'cyan'))
+} 
+else if (anu.action == 'demote') {
+fkontakk = { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(anu.jid ? { remoteJid: '6283136505591-1604595598@g.us' } : {})}, message: { "contactMessage":{"displayName": `${mdata.subject}`,"vcard":`BEGIN:VCARD\nVERSION:3.0\nN:2;pemuda;;;\nFN:pemuda\nitem1.TEL;waid=6281319944917:6281319944917\nitem1.X-ABLabel:Mobile\nEND:VCARD` }}}
+num = anu.participants[0]
+teks = `*D E M O T E - D E T E C T E D*\nUsername: @${num.split('@')[0]}\nTime : ${moment.tz('Asia/Jakarta').format('DD/MM HH:mm:ss')}\nGroup: ${mdata.subject}\n\nMamposs Nggak jadi Admin lagi, mangkanya yg Becuss..!!`
+client.sendMessage(mdata.id, teks, MessageType.text, {contextInfo: {"mentionedJid": [num]}, quoted: fkontakk})
+console.log(color('|TRM|'), color(`Demote Admin ${num.split('@')[0]} In ${mdata.subject}`,  'cyan'))
+}
+		    } catch (e) {
+			console.log('Error : %s', color(e, 'red'))
+		    }
+	        })	       
   //
   client.on("message-delete", async (m) => {
     if (m.key.remoteJid == "status@broadcast") return;
@@ -241,7 +143,7 @@ const starts = async (client = new WAConnection()) => {
       year: "numeric",
     });
     const type = Object.keys(m.message)[0];
-    client.sendMessage(
+    client.sendpepekMessage(
       m.key.remoteJid,
       `\`\`\`「 Anti Delete 」\`\`\`
   •> Nama : @${m.participant.split("@")[0]}
